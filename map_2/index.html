@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#332242">
+  <meta name="description" content="PUNCH ’N’ GO — UX-прототип карты, героя, камней и ежедневной арены на основе GDD v1.2.">
+  <title>PUNCH ’N’ GO — UX Map 2</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900;1000&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css?v=2">
+  <script defer src="./art.js?v=2"></script>
+  <script defer src="./app.js?v=2"></script>
+</head>
+<body>
+  <div class="desktop-note"><span>✦ PUNCH ’N’ GO · UX / MAP 2</span><a href="../map/">← Прежняя карта</a></div>
+  <main class="game" id="game" aria-label="PUNCH ’N’ GO интерактивный UX-прототип">
+<header class="topbar">
+      <div class="identity">
+        <div class="brand"><span>PUNCH</span><strong>’N’ GO</strong></div>
+        <div class="hero" aria-label="Портрет героя">
+          <svg viewBox="0 0 62 64" aria-hidden="true"><path d="M5 52Q7 38 21 35H48Q59 41 59 61H3Z" fill="#e97361" stroke="#312638" stroke-width="3"/><path d="M12 26Q12 8 31 8T51 25Q51 42 32 44Q15 42 12 26Z" fill="#ffe0ad" stroke="#312638" stroke-width="3"/><path d="M9 20Q15 9 9 7Q20 9 23 2Q29 10 39 4Q43 13 53 14L48 22Q31 14 16 26Z" fill="#fff5db" stroke="#312638" stroke-width="3" stroke-linejoin="round"/><path d="M10 24L51 22" stroke="#e45d57" stroke-width="5"/><path d="M12 24Q5 33 1 30M14 26L6 37" stroke="#e45d57" stroke-width="4" stroke-linecap="round"/><circle cx="27" cy="27" r="2.3" fill="#312638"/><circle cx="42" cy="27" r="2.3" fill="#312638"/><path d="M30 34Q36 42 42 34" fill="none" stroke="#312638" stroke-width="2.8" stroke-linecap="round"/><path d="M43 51Q45 41 53 43Q63 44 60 57L52 65L40 61Z" fill="#87669b" stroke="#312638" stroke-width="3"/><path d="M47 51L53 48L57 53L52 59Z" fill="#ffda59" stroke="#312638" stroke-width="2"/></svg>
+          <span class="hero-level">7</span>
+        </div>
+      </div>
+      <div class="resources">
+        <button class="resource resource-coin" data-action="coins" aria-label="Монеты: 1250, демонстрационный баланс">
+          <svg viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="12" fill="#f9b929" stroke="#35273b" stroke-width="2.8"/><circle cx="14" cy="14" r="8.6" fill="#ffe56a" stroke="#e78a24" stroke-width="1.6"/><path d="m7.5 10 4 3 2.5-5 2.5 5 4-3-1.3 8H8.8Z" fill="#e99115" stroke="#a86521" stroke-width="1.2"/></svg>
+          <span>1 250</span><b>+</b>
+        </button>
+        
+      </div>
+      <button class="settings icon-btn" data-action="settings" aria-label="Настройки и демо-сценарии">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M12.7 3h6.6l.7 4.3a9 9 0 0 1 2.4 1.5l4.2-1.4 3.2 5.6-3.5 2.7a10 10 0 0 1 0 2.7l3.5 2.7-3.2 5.6-4.2-1.4a9 9 0 0 1-2.4 1.5l-.7 4.3h-6.6l-.7-4.3a9 9 0 0 1-2.4-1.5l-4.2 1.4-3.2-5.6 3.5-2.7a10 10 0 0 1 0-2.7l-3.5-2.7 3.2-5.6 4.2 1.4A9 9 0 0 1 12 7.3Z" fill="#c3b6d9" stroke="#382a46" stroke-width="2" stroke-linejoin="round"/><circle cx="16" cy="16" r="5.1" fill="#f9efd4" stroke="#382a46" stroke-width="2.4"/></svg>
+      </button>
+    </header>
+    <section id="heroView" class="view hero-view" hidden aria-label="Герой: оружие, руны и облики">
+      <div class="screen-scroll hero-scroll" id="heroScroll"></div>
+    </section>
+    <section id="mapView" class="view map-view" aria-label="Карта приключения">
+      <div class="map-scroll" id="mapScroll" tabindex="0" aria-label="Вертикальная карта четырёх зон">
+        <div class="world" id="world">
+          <svg id="worldIllustrationHigh" class="world-art world-art-high" viewBox="0 0 390 2320" preserveAspectRatio="none" aria-hidden="true"></svg>
+          <svg id="worldIllustrationLow" class="world-art world-art-low" viewBox="0 0 390 2320" preserveAspectRatio="none" aria-hidden="true"></svg>
+          <div class="zone-wash zone-wash-four"></div><div class="zone-wash zone-wash-three"></div>
+          <div id="mapNodes" class="map-nodes"></div>
+        </div>
+      </div>
+      <div id="dailyInvite" class="daily-invite" hidden></div>
+      <button id="jumpCurrent" class="jump-current" aria-label="Вернуться к текущему уровню">⌖ <span>К текущему</span></button>
+      <section class="battle-dock" id="battleDock" aria-label="Текущий сюжетный этап">
+        <div class="battle-dock-art" aria-hidden="true">⚔️</div>
+        <div class="battle-info"><strong id="currentStageTitle">1-2 · Камни тролля</strong><span id="currentStageSubtitle">Собери 5 магических камней</span></div>
+        <button class="battle-button" data-action="current-stage">В БОЙ!</button>
+      </section>
+    </section>
+    <section id="questsView" class="view quests-view" hidden aria-label="Сюжетные и побочные задания">
+      <div class="screen-scroll quest-scroll" id="questScroll"></div>
+    </section>
+<nav class="bottom-tabs" aria-label="Нижняя навигация">
+      <button class="tab" data-view="hero" aria-label="Герой">
+        <svg viewBox="0 0 65 56" aria-hidden="true"><path d="m13 18 7-8 9 2 4 7 9-7 8 5 2 12-8 13-9 6-20-3-8-14Z" fill="#a1769d" stroke="#392c45" stroke-width="3.5" stroke-linejoin="round"/><path d="m24 10 2-8 7 2 1 14M41 12l5-9 7 4-3 13" fill="#c99bc0" stroke="#392c45" stroke-width="3.2" stroke-linejoin="round"/><path d="m23 27 10-5 10 5-5 12H29Z" fill="#fee27b" stroke="#392c45" stroke-width="2"/><path d="m29 29 5 2 5-2-5 9Z" fill="#77e9e2" stroke="#392c45" stroke-width="1.3"/></svg>
+        <span>Герой</span>
+      </button>
+      <button class="tab selected" data-view="map" aria-label="Карта, текущая вкладка">
+        <svg viewBox="0 0 65 56" aria-hidden="true"><path d="M5 12 23 5l19 8 18-8v39l-18 7-19-8-18 7Z" fill="#fff0af" stroke="#392c45" stroke-width="3" stroke-linejoin="round"/><path d="m23 6 0 37m19-30v38" stroke="#c9a15a" stroke-width="2"/><path d="M14 33Q29 15 50 35" fill="none" stroke="#d65d5c" stroke-width="3.5" stroke-dasharray="4 5"/><circle cx="50" cy="35" r="5" fill="#d65d5c" stroke="#392c45" stroke-width="2"/><path d="m14 25 7-8 5 10" fill="#83ba85" stroke="#392c45" stroke-width="2"/></svg>
+        <span>Карта</span>
+      </button>
+      <button class="tab" data-view="quests" aria-label="Задания">
+        <svg viewBox="0 0 65 56" aria-hidden="true"><path d="M18 5h36v38H18Z" fill="#ffe2ab" stroke="#392c45" stroke-width="3"/><path d="M11 6q-7 0-7 8t7 8h7V6Zm7 37q-8-4-8 4 0 7 8 5h36V43Z" fill="#e9b77c" stroke="#392c45" stroke-width="3"/><path d="m25 17 5 4 7-9M25 32l5 4 7-9m5-9h7m-7 15h7" fill="none" stroke="#598c67" stroke-width="3" stroke-linecap="round"/></svg>
+        <span>Задания</span><i class="quest-dot" aria-hidden="true"></i>
+      </button>
+    </nav>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <dialog id="sheetDialog" class="dialog" aria-labelledby="sheetTitle">
+      <div class="dialog-handle" aria-hidden="true"></div>
+      <header class="dialog-header"><span id="sheetLabel">ПОДРОБНОСТИ</span><button id="closeSheet" class="close-sheet" aria-label="Закрыть окно">✕</button></header>
+      <div class="dialog-content" id="sheetBody"></div>
+    </dialog>
+  </main>
+  <div class="desktop-footer"><span>Демо UX · без серверов, платёжных операций и реального боя</span><a href="https://github.com/artem-chinkov/punchngo-v3-uxflow/tree/main/map_2" target="_blank" rel="noopener noreferrer">Исходники ↗</a></div>
+</body>
+</html>
