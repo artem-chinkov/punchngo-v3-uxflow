@@ -11,6 +11,16 @@
     {id:"staff",name:"Магический посох",short:"Посох",icon:"🪄",detail:"Дальняя магия · заряд · контроль полос",from:7},
     {id:"hammer",name:"Двуручный молот",short:"Молот",icon:"🔨",detail:"Мощный замах · удар о землю · отбрасывание",from:10}
   ];
+  // Original illustrated weapon icons in the same outlined cartoon-fantasy language as the map.
+  function weaponSvg(id){
+    const o="#47344e",g="#ffd868";
+    let shape="";
+    if(id==="gloves")shape='<g stroke="'+o+'" stroke-width="4" stroke-linejoin="round"><path d="M14 72 10 43Q6 30 18 26L18 13Q20 5 28 12L33 20Q34 10 42 13L48 25Q54 19 60 26L61 49L54 77Z" fill="#e6a49b"/><path d="M14 57L57 57L55 79L17 79Z" fill="'+g+'"/><path d="M26 22V38M40 25V40" stroke="#f8d2c4"/><path d="M68 43Q68 23 81 28Q92 34 89 51L86 78H68Z" fill="#9e87c8"/><path d="M66 68H89V81H66Z" fill="'+g+'"/></g>';
+    if(id==="sword")shape='<g stroke="'+o+'" stroke-width="4" stroke-linejoin="round"><path d="M10 12L23 7L64 58L56 67Z" fill="#b4bacf"/><path d="M17 13L60 63" stroke="#faf8eb" stroke-width="3"/><path d="M49 66L70 45" stroke="'+g+'" stroke-width="9" stroke-linecap="round"/><path d="M62 62L83 87" stroke="#ae8061" stroke-width="9"/><path d="M69 14L92 25L86 64L64 79L48 57L49 29Z" fill="#9bc4d1"/><path d="M62 31L79 31L76 62L62 65Z" fill="#f6ecd0" opacity=".7"/></g>';
+    if(id==="staff")shape='<g stroke="'+o+'" stroke-width="4" stroke-linejoin="round"><path d="M25 93L71 16" stroke="#a47757" stroke-width="12" stroke-linecap="round"/><path d="M28 91L73 15" stroke="#e3b87c" stroke-width="4"/><path d="M51 17L65 5L83 13L90 30L71 49L54 43Z" fill="#997cc2"/><path d="M67 16L80 28L69 40L57 28Z" fill="#78e5e5"/><path d="M25 69L41 77" stroke="'+g+'" stroke-width="6"/></g>';
+    if(id==="hammer")shape='<g stroke="'+o+'" stroke-width="4" stroke-linejoin="round"><path d="M26 93L72 20" stroke="#986749" stroke-width="12" stroke-linecap="round"/><path d="M30 88L75 18" stroke="#e8b976" stroke-width="4"/><path d="M17 19L66 6L91 40L54 63L29 46Z" fill="#bbb3c3"/><path d="M19 19L37 15L60 52L49 61Z" fill="#ede6ee"/><path d="M60 11L85 41" stroke="'+g+'" stroke-width="8"/></g>';
+    return '<svg viewBox="0 0 100 100" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">'+shape+'</svg>';
+  }
   const COLORS = ["red","blue","green"];
   const COLOR = {red:{label:"Красный",type:"Натиск",icon:"🔴"},blue:{label:"Синий",type:"Защита",icon:"🔵"},green:{label:"Зелёный",type:"Контроль",icon:"🟢"}};
   const STONES = {
@@ -125,7 +135,7 @@
     const w=state.weapon,W=weapon(w),el=$("#heroScroll");
     const canEquip=isUnlocked(w);
     const slots=twoSlots(w);
-    const options=WEAPONS.map(item=>'<button class="weapon-option '+(item.id===w?"is-selected ":"")+(isUnlocked(item.id)?"":"is-locked")+'" data-action="weapon:'+item.id+'" aria-label="'+esc(item.name)+'">'+(isUnlocked(item.id)?"":'<span class="lock-flag">🔒</span>')+'<span class="weapon-emoji">'+item.icon+'</span>'+esc(item.short)+'</button>').join("");
+    const options=WEAPONS.map(item=>'<button class="weapon-option '+(item.id===w?"is-selected ":"")+(isUnlocked(item.id)?"":"is-locked")+'" data-action="weapon:'+item.id+'" aria-label="'+esc(item.name)+'">'+(isUnlocked(item.id)?"":'<span class="lock-flag">🔒</span>')+'<span class="weapon-emoji">'+weaponSvg(item.id)+'</span>'+esc(item.short)+'</button>').join("");
     const slotCards=[0,1].map(i=>{
       const c=slots[i];return c?'<button class="stone-slot stone-'+c+'" data-action="stone:'+w+':'+c+'" aria-label="Свойства и огранка камня '+esc(STONES[w][c].name)+'"><span class="slot-label">ГНЕЗДО '+(i+1)+'</span><span class="big-gem">'+COLOR[c].icon+'</span><strong>'+esc(runic(w,c))+'</strong><p>'+esc(STONES[w][c].effect)+'</p><span class="slot-footer">'+(awakened(w,c)?"Пробуждён · II": "Мастерство "+mastery(w,c)+"/5 · I")+' ›</span></button>':
         '<button class="stone-slot" data-action="empty-slot:'+w+'" aria-label="Выбрать камень в пустой слот"><span class="slot-label">ГНЕЗДО '+(i+1)+'</span><span class="big-gem">◇</span><strong>Пусто</strong><p>Выбери камень из коллекции</p><span class="slot-footer">+ Установить</span></button>';
@@ -137,7 +147,7 @@
     const skins=SKINS.map(s=>'<button class="skin-option '+(state.skin[w]===s.id?"selected ":"")+(ownSkin(w,s.id)?"":"locked")+'" data-action="skin:'+w+':'+s.id+'"><span style="font-size:27px">'+s.icon+'</span><span>'+esc(s.name)+(ownSkin(w,s.id)?"":" 🔒")+'</span></button>').join("");
     el.innerHTML='<h1 class="screen-heading">Герой и оружие</h1><p class="sub-heading">Подготовка к следующему приключению</p>'+
       '<div class="weapon-row">'+options+'</div>'+
-      '<section class="parchment-card weapon-showcase"><div class="weapon-stage"><span class="weapon-art">'+W.icon+'</span></div>'+
+      '<section class="parchment-card weapon-showcase"><div class="weapon-stage"><span class="weapon-art">'+weaponSvg(w)+'</span></div>'+
       '<h2 class="weapon-title">'+esc(W.name)+'</h2><p class="weapon-desc">'+esc(W.detail)+'</p>'+
       '<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:10px"><span class="status-chip '+(canEquip?"":"locked")+'">'+(canEquip?"✓ "+(w==="gloves"?"Начальное оружие":"Открыто"):"🔒 Открывается после босса "+(W.from===4?"1-3":W.from===7?"2-3":"3-3"))+'</span>'+button("equip:"+w,w===state.equipped||(!state.equipped&&w==="gloves")?"Выбрано ✓":"Выбрать","small-btn",!canEquip||state.equipped===w||(!state.equipped&&w==="gloves"))+'</div></section>'+
       '<div class="section-top"><h2>Камни оружия</h2><span class="hint">Установлено '+slots.length+'/2</span></div>'+
