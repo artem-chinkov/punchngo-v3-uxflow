@@ -447,7 +447,7 @@
   dialog.addEventListener("click",e=>{
     if(e.target===dialog){closeSheet();return;}
     const b=e.target.closest("[data-action]");
-    if(b){e.preventDefault();handle(b.dataset.action);}
+    if(b){e.preventDefault();e.stopPropagation();handle(b.dataset.action);}
   });
   dialog.addEventListener("close",()=>root.classList.remove("modal-open"));
   dialog.addEventListener("cancel",()=>root.classList.remove("modal-open"));
